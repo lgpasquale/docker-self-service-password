@@ -14,7 +14,8 @@ RUN a2dissite 000-default
 RUN a2ensite self-service-password
 RUN a2ensite self-service-password-ssl
 
-ADD init.sh /init.sh
+ADD ./init.sh /init.sh
+RUN chmod +x /init.sh
 
 EXPOSE 80
 EXPOSE 443
