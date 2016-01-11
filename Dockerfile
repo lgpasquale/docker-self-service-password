@@ -10,6 +10,7 @@ RUN dpkg -i self-service-password_0.9-1_all.deb
 
 ADD sites-available/self-service-password-ssl.conf /etc/apache2/sites-available/self-service-password-ssl.conf
 RUN cp /etc/apache2/sites-available/self-service-password /etc/apache2/sites-available/self-service-password.conf
+RUN a2enmod ssl
 RUN a2dissite 000-default
 RUN a2ensite self-service-password
 RUN a2ensite self-service-password-ssl
