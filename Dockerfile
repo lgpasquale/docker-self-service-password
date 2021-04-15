@@ -1,16 +1,14 @@
-FROM debian:stable
+FROM debian:buster
 
 MAINTAINER Luca Pasquale
 
-RUN apt-get update && apt-get -y install wget
-RUN wget http://ltb-project.org/archives/self-service-password_1.3-1_all.deb
-RUN apt-get -y install apache2 php php-ldap php-mcrypt
-RUN dpkg -i self-service-password_1.3-1_all.deb
+RUN apt-get update && apt-get -y install wget gnupg php-mbstring
+RUN wget -q -O - https://ltb-project.org/wiki/lib/RPM-GPG-KEY-LTB-project | apt-key add -
+RUN echo "deb [arch=amd64] https://ltb-project.org/debian/stable stable main" > /etc/apt/sources.list.d/ltb-project.list
+RUN apt-get update && apt-get -y install self-service-password
 
 RUN a2dissite 000-default
 RUN a2ensite self-service-password
-
-RUN apt-get install -y php-mbstring php-xml
 
 ADD ./init.sh /init.sh
 RUN chmod +x /init.sh
